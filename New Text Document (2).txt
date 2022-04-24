@@ -1,0 +1,83 @@
+Executando a partir do diretório .
+Data de Geração: 2022-02-21
+Data de Referência: 0001-01-01
+Arquivo Anvldia.txt - File Date:2022-02-07 07:30:00.
+
+Arquivo Anvldia.txt - File Size:5655669.
+
+Arquivo Anvldia.txt - NumRecords:72630 (non null).
+
+Arquivo Anvldia.txt - MaxData:2022-02-07.
+
+Arquivo Anvldia.txt - MinData:1999-10-14.
+
+Arquivo Anvldia.txt - First Fund:000191.
+
+Arquivo Anvldia.txt - Last Fund:634875.
+
+Arquivo Anvldia.txt - NumFunds:24921 (non null).
+
+
+
+
+Filtro 1: Processando fundo 634875.
+Filtro 2: Processando fundo 634875.
+Fundos de Abertura = 2364
+
+Fundos de Abertura Bateu = 0 diffmin= 0 diffmax=5.16581450561274E-08
+
+Fundos de Abertura Nao Bateu = 0 diffmin= 2.63421178801179E-05 diffmax=7.11957318730898E-07 All Fixed
+
+	Fundos de Abertura Two Records (=2) = 0
+
+	Fundos de Abertura Three Records (=3) = 0
+
+		Fundos de Abertura 3 Recs Data Sequential = 0
+
+		Fundos de Abertura 3 Recs Data Mismatch = 0
+
+		Fundos de Abertura 4 or More Records (>=3) = 0
+
+	Fundos de Abertura 4 Recs & Beyond Data Mismatch = 0
+
+		Fundos de Abertura Remove 4th Record and Beyond = 0 All Removed
+
+		Fundos de Abertura Leave 4th Record and Beyond left Alone = 0
+
+		Fundos de Abertura Removed Record and Recovered back = 0
+
+Fundos de Abertura Sozinho (<2) = 0 Left Alone
+
+Fundos de Abertura Reg Duplicado = 0 All Fixed
+
+Fundos de Abertura Missing PL Record = 0 All Fixed
+
+Fundos de Abertura Nao Sequencial = 0
+
+Fundos de Abertura Sem DataZERO = 0
+
+Fundos de Abertura Com DataUMA = 0
+
+Fundos de Abertura DataUMA Sozinho (<2) = 0 Left Alone
+
+	Fundos de Abertura DataUMA Two Records (=2) = 0
+
+Fundos de Abertura Sem DataUMA = 0
+
+Fundos de Abertura Sem DataUMA Sozinho (<2) = 0 Left Alone
+
+	Fundos de Abertura Sem DataUMA Two Records (=2) = 0
+
+Fundos de Abertura Sem DataUMA Removed Record = 0 
+
+Fundos de Abertura Sem DataUMA Removed Recovered Record = 0 
+
+Matched Records Count = 0 
+
+Matched Records from DB = 0 
+
+Matched Records PL = 0 
+
+Matched Records ValCota = 0 
+
+Done!

@@ -1,0 +1,77 @@
+Executando a partir do diretório .
+Data de Geração: 2022-02-18
+Data de Referência: 0001-01-01
+Arquivo Anvldia.txt - File Date:2022-02-07 07:30:00.
+
+Arquivo Anvldia.txt - File Size:5655669.
+
+Arquivo Anvldia.txt - NumRecords:72630 (non null).
+
+Arquivo Anvldia.txt - MaxData:2022-02-07.
+
+Arquivo Anvldia.txt - MinData:1999-10-14.
+
+Arquivo Anvldia.txt - First Fund:000191.
+
+Arquivo Anvldia.txt - Last Fund:634875.
+
+Arquivo Anvldia.txt - NumFunds:24921 (non null).
+
+
+
+
+Filtro 1: Processando fundo 634875.
+Filtro 2: Processando fundo 043206.
+Filtro 2: Processando fundo 634875.
+Fundos de Abertura = 2364
+
+Fundos de Abertura Bateu = 1386 diffmin= 0 diffmax=4.61382345721546E-07
+
+Fundos de Abertura Nao Bateu = 35 diffmin= 5.06972092859983E-07 diffmax=0.238997712837477 All Fixed
+
+	Fundos de Abertura Two Records (=2) = 1151
+
+	Fundos de Abertura Three Records (=3) = 197
+
+		Fundos de Abertura 3 Recs Data Sequential = 120
+
+		Fundos de Abertura 3 Recs Data Mismatch = 77
+
+		Fundos de Abertura 4 or More Records (>=3) = 73
+
+	Fundos de Abertura 4 Recs & Beyond Data Mismatch = 16
+
+		Fundos de Abertura Remove 4th Record and Beyond = 134 None Removed
+
+		Fundos de Abertura Leave 4th Record and Beyond left Alone = 706
+
+		Fundos de Abertura Removed Record and Recovered back = 0
+
+Fundos de Abertura Sozinho (<2) = 1 Left Alone
+
+Fundos de Abertura Reg Duplicado = 20 All Fixed
+
+Fundos de Abertura Missing PL Record = 0 All Fixed
+
+Fundos de Abertura Nao Sequencial = 0
+
+Fundos de Abertura Sem DataZERO = 922
+
+Fundos de Abertura Com DataUMA = 602
+
+Fundos de Abertura DataUMA Sozinho (<2) = 112 Left Alone
+
+	Fundos de Abertura DataUMA Two Records (=2) = 490
+
+Fundos de Abertura Sem DataUMA = 320
+
+Fundos de Abertura Sem DataUMA Sozinho (<2) = 126 Left Alone
+
+	Fundos de Abertura Sem DataUMA Two Records (=2) = 194
+
+Fundos de Abertura Sem DataUMA Removed Record = 659 
+
+Fundos de Abertura Sem DataUMA Removed Recovered Record = 199 
+
+Done!
+
