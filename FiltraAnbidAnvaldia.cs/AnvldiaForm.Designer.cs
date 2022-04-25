@@ -121,7 +121,6 @@
             // anvldiaGridView
             // 
             this.anvldiaGridView.AllowUserToAddRows = false;
-            this.anvldiaGridView.AllowUserToDeleteRows = false;
             this.anvldiaGridView.AllowUserToResizeRows = false;
             this.anvldiaGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.anvldiaGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -136,6 +135,7 @@
             this.RentAno,
             this.RemoveFlag});
             this.anvldiaGridView.Location = new System.Drawing.Point(30, 50);
+            this.anvldiaGridView.MultiSelect = false;
             this.anvldiaGridView.Name = "anvldiaGridView";
             this.anvldiaGridView.Size = new System.Drawing.Size(743, 274);
             this.anvldiaGridView.TabIndex = 1;
@@ -348,6 +348,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "AnvldiaForm";
             this.Text = "anvldiaForm";
+            this.Load += new System.EventHandler(this.AnvldiaForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.anvldiaGridView)).EndInit();

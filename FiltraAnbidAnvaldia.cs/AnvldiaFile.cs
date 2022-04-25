@@ -641,13 +641,13 @@ namespace FiltraAnbidAnvaldia
                     firstRecord = FileFirstRecord[fundNumber];
                     lastRecord = FileLastRecord[fundNumber];
 
-                    //if (FileRecords[firstRecord].CodFundo.Equals("640778"))
-                    //{
-                    //    MessageBox.Show("Here");
+                    if (FileRecords[firstRecord].CodFundo.Equals("001996"))
+                    {
+                        MessageBox.Show("Here");
                     //    AnvldiaForm aForm = new AnvldiaForm();
                     //    aForm.InitializeGrid(this, firstRecord, lastRecord);
                     //    DialogResult aResult = aForm.ShowDialog();
-                    //}
+                    }
 
                     while (firstRecord < lastRecord && FileRecords[firstRecord].bRemoveLine) firstRecord++;  // Adjust beggining and end of sequence
                     while (firstRecord <= lastRecord && FileRecords[lastRecord].bRemoveLine) lastRecord--;  // Adjust beggining and end of sequence

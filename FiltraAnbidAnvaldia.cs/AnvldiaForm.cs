@@ -27,6 +27,19 @@ namespace FiltraAnbidAnvaldia
             InitializeComponent();
 
             //anvldiaGridViewAddRow();
+
+            //anvldiaGridView.SelectionChanged += anvldiaGridView_SelectionChanged;
+
+            anvldiaGridView.UserDeletingRow += anvldiaGridView_UserDeletingRow;
+
+            //anvldiaGridView.UserAddedRow += anvldiaGridView_UserAddedRow;
+
+            anvldiaGridView.RowHeaderMouseDoubleClick += anvldiaGridView_RowHeaderMouseDoubleClick;
+
+            anvldiaGridView.KeyDown += anvldiaGridView_KeyDown;
+
+            anvldiaGridView.RowsDefaultCellStyle.BackColor = Color.White; //.Bisque;
+            anvldiaGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.Bisque; // Color.Beige;
         }
 
         public void InitializeGrid(AnvldiaFile aFile, int aFirstRow, int aLastRow)
@@ -56,7 +69,6 @@ namespace FiltraAnbidAnvaldia
                     aRecord = aRecord.ptrPreviousRecord;
                     id = ANVLDIAGridViewAddRow(id, aRecord);
                     theList.Add(aRecord);
-
                 };
                 i--;
             }
@@ -81,7 +93,7 @@ namespace FiltraAnbidAnvaldia
 
             if (aRecord.bZeroPL) aRow.Cells[3].Style.BackColor = Color.MediumSpringGreen;
             else if (aRecord.bSignalRecDate) aRow.Cells[3].Style.BackColor = Color.Yellow;
-            else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 1) aRow.Cells[3].Style.BackColor = Color.MediumBlue;
+            else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 1) aRow.Cells[3].Style.BackColor = Color.MediumSlateBlue;
             else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 2) aRow.Cells[3].Style.BackColor = Color.LightBlue;
             else if (aRecord.bNullRecord) aRow.Cells[3].Style.BackColor = Color.Red;
             else if (aRecord.bRemoveLine) aRow.Cells[3].Style.BackColor = Color.LightCoral;
@@ -119,11 +131,61 @@ namespace FiltraAnbidAnvaldia
                 databaseGridView.Rows.Add(aRow);
        }
 
+        private void anvldiaGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            int aRow = anvldiaGridView.CurrentRow.Index;
+            int aCol = anvldiaGridView.CurrentCell.ColumnIndex;
+            MessageBox.Show($"Selected cell at row={aRow} and col={aCol}.");
+        }
+
+
         private void anvldiaGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int aRow = e.RowIndex;
             int aCol = e.ColumnIndex; 
             // MessageBox.Show($"Hi there row={aRow} col={aCol}");
+        }
+
+        private void anvldiaGridView_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            int aRow = e.Row.Index;
+            //int aCol = e.ColumnIndex;
+            MessageBox.Show($"Trying to add a row={aRow}");
+            //e.Cancel = true;
+        }
+
+        private void anvldiaGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            int aRow = e.Row.Index;
+            //int aCol = e.ColumnIndex;
+            MessageBox.Show($"Trying to delete row={aRow}");
+            e.Cancel = true;
+        }
+
+        private void anvldiaGridView_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int aRow = e.RowIndex;
+            int aCol = e.ColumnIndex;
+            MessageBox.Show($"Trying to double click on row={aRow} col={aCol}");
+            //e.Cancel = true;
+        }
+        
+        /* Neat trick with FORMS
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {  if (keyData == Keys.Insert) { MessageBox.Show($"InsertKey: "); }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }*/
+
+        private void anvldiaGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            //int aRow = e.RowIndex;
+            //int aCol = e.ColumnIndex;
+            //MessageBox.Show($"Trying to double click on row={aRow} col={aCol}");
+            //e.Cancel = true;
+            if (e.KeyCode == Keys.Insert)
+            {              
+                MessageBox.Show($"Insert Pressed");
+            }
 
         }
 
@@ -299,7 +361,7 @@ namespace FiltraAnbidAnvaldia
             {
                 if (aRecord.bZeroPL) aRow.Cells[3].Style.BackColor = Color.MediumSpringGreen;
                 else if (aRecord.bSignalRecDate) aRow.Cells[3].Style.BackColor = Color.Yellow;
-                else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 1) aRow.Cells[3].Style.BackColor = Color.MediumBlue;
+                else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 1) aRow.Cells[3].Style.BackColor = Color.MediumSlateBlue;
                 else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 2) aRow.Cells[3].Style.BackColor = Color.LightBlue;
                 else if (aRecord.bNullRecord) aRow.Cells[3].Style.BackColor = Color.Red;
                 else if (aRecord.bRemoveLine) aRow.Cells[3].Style.BackColor = Color.LightCoral;
@@ -326,6 +388,11 @@ namespace FiltraAnbidAnvaldia
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AnvldiaForm_Load(object sender, EventArgs e)
         {
 
         }

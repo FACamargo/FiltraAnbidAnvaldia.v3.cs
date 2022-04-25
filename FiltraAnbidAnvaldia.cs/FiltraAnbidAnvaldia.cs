@@ -117,10 +117,10 @@ namespace FiltraAnbidAnvaldia
 
             afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(a).txt", AllLines: false, RemovedLines: false, AddedLines: true);
 
-            if (DialogResult.OK == MessageBox.Show($"Rewrite/Dump Exceptions File?", "MESSAGE", MessageBoxButtons.OKCancel))
-            {
-                afile.DumpExceptionsFile(@"C:\SIAnbid42\anvldiaExceptions.txt");
-            }
+            //if (DialogResult.OK == MessageBox.Show($"Rewrite/Dump Exceptions File?", "MESSAGE", MessageBoxButtons.OKCancel))
+            //{
+            //    afile.DumpExceptionsFile(@"C:\SIAnbid42\anvldiaExceptions.txt");
+            //}
 
             DBFunctions.CloseDBConn();
             
