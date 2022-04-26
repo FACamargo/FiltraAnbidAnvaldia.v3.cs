@@ -110,6 +110,52 @@ namespace FiltraAnbidAnvaldia
             return ++id;
         }
 
+        public void anvldiaGridViewAddFirstRow()
+        {
+            DateTime prevDate = new DateTime();
+            DataGridViewRow aRow; //= new DataGridViewRow();
+
+            aRow = (DataGridViewRow)anvldiaGridView.CurrentRow.Clone();
+            for (Int32 index = 0; index < aRow.Cells.Count; index++)
+            {
+                aRow.Cells[index].Value = anvldiaGridView.CurrentRow.Cells[index].Value;
+            }
+            //aRow.Cells[2].Value = aRecord.CodFundo;
+            prevDate = DateTime.ParseExact(anvldiaGridView.CurrentRow.Cells[3].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            prevDate = Program.oCalendario.NextWorkingDay(prevDate);
+            aRow.Cells[3].Value = prevDate.ToString("dd/MM/yyyy");
+
+            anvldiaGridView.Rows.Insert(0, aRow);
+
+            /*
+        aRow.CreateCells(anvldiaGridView);
+
+        aRow.Cells[0].Value = false;
+        aRow.Cells[1].Value = id.ToString();
+        aRow.Cells[2].Value = aRecord.CodFundo;
+        aRow.Cells[3].Value = aRecord.Data.ToString("dd/MM/yyyy");
+
+        if (aRecord.bZeroPL) aRow.Cells[3].Style.BackColor = Color.MediumSpringGreen;
+        else if (aRecord.bSignalRecDate) aRow.Cells[3].Style.BackColor = Color.Yellow;
+        else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 1) aRow.Cells[3].Style.BackColor = Color.MediumSlateBlue;
+        else if (aRecord.bFlagCotaOffBounds && aRecord.nFlagCotaOBType == 2) aRow.Cells[3].Style.BackColor = Color.LightBlue;
+        else if (aRecord.bNullRecord) aRow.Cells[3].Style.BackColor = Color.Red;
+        else if (aRecord.bRemoveLine) aRow.Cells[3].Style.BackColor = Color.LightCoral;
+        else aRow.Cells[3].Style.BackColor = Color.White;
+
+        aRow.Cells[4].Value = aRecord.PL.ToString("F2", sBr);
+        aRow.Cells[5].Value = aRecord.ValCota.ToString("F9", sBr); // "1,23456700";
+        aRow.Cells[6].Value = aRecord.RentDia.ToString("F7", sBr);
+        aRow.Cells[7].Value = aRecord.RentMes.ToString("F7", sBr);
+        aRow.Cells[8].Value = aRecord.RentAno.ToString("F7", sBr);
+        aRow.Cells[9].Value = aRecord.bRemoveLine;
+        anvldiaGridView.Rows.Add(aRow);
+
+        return ++id;
+        */
+
+        }
+
         public void DATABASEGridViewAddRow(int id, AnvldiaRecord aRecord)
         {
                 DataGridViewRow aRow = new DataGridViewRow();
@@ -131,13 +177,14 @@ namespace FiltraAnbidAnvaldia
                 databaseGridView.Rows.Add(aRow);
        }
 
+        /*
         private void anvldiaGridView_SelectionChanged(object sender, EventArgs e)
         {
             int aRow = anvldiaGridView.CurrentRow.Index;
             int aCol = anvldiaGridView.CurrentCell.ColumnIndex;
             MessageBox.Show($"Selected cell at row={aRow} and col={aCol}.");
         }
-
+        */
 
         private void anvldiaGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -145,7 +192,9 @@ namespace FiltraAnbidAnvaldia
             int aCol = e.ColumnIndex; 
             // MessageBox.Show($"Hi there row={aRow} col={aCol}");
         }
+        
 
+        /*
         private void anvldiaGridView_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
             int aRow = e.Row.Index;
@@ -153,6 +202,7 @@ namespace FiltraAnbidAnvaldia
             MessageBox.Show($"Trying to add a row={aRow}");
             //e.Cancel = true;
         }
+        */
 
         private void anvldiaGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
@@ -178,13 +228,14 @@ namespace FiltraAnbidAnvaldia
 
         private void anvldiaGridView_KeyDown(object sender, KeyEventArgs e)
         {
-            //int aRow = e.RowIndex;
-            //int aCol = e.ColumnIndex;
-            //MessageBox.Show($"Trying to double click on row={aRow} col={aCol}");
-            //e.Cancel = true;
             if (e.KeyCode == Keys.Insert)
             {              
-                MessageBox.Show($"Insert Pressed");
+                int aRow = anvldiaGridView.CurrentCell.RowIndex;
+                int aCol = anvldiaGridView.CurrentCell.ColumnIndex;
+                MessageBox.Show($"Trying to insert on row={aRow} col={aCol}");
+                if (aRow == 0) anvldiaGridViewAddFirstRow(); 
+                //e.Cancel = true;
+
             }
 
         }

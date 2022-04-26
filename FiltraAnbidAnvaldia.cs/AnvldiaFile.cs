@@ -628,6 +628,8 @@ namespace FiltraAnbidAnvaldia
             DateTime aStartDate;
             DateTime aEndDate;
 
+            int showCount;
+
             try
             {
                 fundNumber = 0;
@@ -640,14 +642,15 @@ namespace FiltraAnbidAnvaldia
                 {
                     firstRecord = FileFirstRecord[fundNumber];
                     lastRecord = FileLastRecord[fundNumber];
+                    showCount = 0;
 
-                    if (FileRecords[firstRecord].CodFundo.Equals("001996"))
-                    {
-                        MessageBox.Show("Here");
+                    //if (FileRecords[firstRecord].CodFundo.Equals("001996"))
+                    //{
+                    //    MessageBox.Show("Here");
                     //    AnvldiaForm aForm = new AnvldiaForm();
                     //    aForm.InitializeGrid(this, firstRecord, lastRecord);
                     //    DialogResult aResult = aForm.ShowDialog();
-                    }
+                    //}
 
                     while (firstRecord < lastRecord && FileRecords[firstRecord].bRemoveLine) firstRecord++;  // Adjust beggining and end of sequence
                     while (firstRecord <= lastRecord && FileRecords[lastRecord].bRemoveLine) lastRecord--;  // Adjust beggining and end of sequence
@@ -666,17 +669,25 @@ namespace FiltraAnbidAnvaldia
                             if (FileRecords[firstRecord].CodFundo.Equals(DBRecords[0].CodFundo))
                             {
                                 evTipo = DBRecords[0].EventoTipo;
-                                if (evTipo == 1) FiltraFundoAbertura(fundNumber, firstRecord, lastRecord);
-                                else if (evTipo == 2) FiltraFundoFechamento(fundNumber, firstRecord, lastRecord);
+                                if (evTipo == 1) showCount = FiltraFundoAbertura(fundNumber, firstRecord, lastRecord);
+                                else if (evTipo == 2) showCount = FiltraFundoFechamento(fundNumber, firstRecord, lastRecord);
                                 else
                                 {
                                     MessageBox.Show($"Error: Fundo is not Abertura nor Fechamento: Fundo({fundNumber.ToString()}): {FileRecords[firstRecord].CodFundo}.");
+                                }
+
+                                if (showCount > 0 || aCodFundo.Equals("001996"))
+                                {
+                                    AnvldiaForm aForm = new AnvldiaForm();
+                                    aForm.InitializeGrid(this, firstRecord, lastRecord);
+                                    DialogResult aResult = aForm.ShowDialog();
                                 }
                             }
                             else
                             {
                                 MessageBox.Show($"Error: DBRecord {DBRecords[0].CodFundo} does not match Fund({fundNumber.ToString()}): {FileRecords[fundNumber].CodFundo}.");
                             }
+
                         }
                         //else
                         //{ //Here we process the records without any DB data on the selected period
@@ -708,7 +719,6 @@ namespace FiltraAnbidAnvaldia
                           //  253863 em 31/12/2021 - maybe is correct!!!
                           //  411302 what the fuck - why did it not work?
                       //}
-
                     }
                     // else skip fund all together...
                     //firstRecord = lastRecord + 1;
@@ -808,7 +818,7 @@ namespace FiltraAnbidAnvaldia
             aRecord.ptrIndex = anIndex;
         }
 
-        public void FiltraFundoAbertura(int fundNumber, int firstRecord, int lastRecord)
+        public int FiltraFundoAbertura(int fundNumber, int firstRecord, int lastRecord)
         {
             //int iCount = 0;
             double diff;
@@ -931,12 +941,15 @@ namespace FiltraAnbidAnvaldia
             {   if (numRecs < 2) AddPreviousDBRecord(FileRecords[lastRecord], lastRecord, DBRecords); // Just one record alone, on an uncertain date
                 else showCount = LoopThroughRecords(firstRecord, lastRecord, dLastCota, showCount); // more records, no hope to fixing them...
             }
+            /*
             if (showCount > 0 || theCodFundo.Equals("001996"))
             {
                AnvldiaForm aForm = new AnvldiaForm();
                aForm.InitializeGrid(this, firstRecord, lastRecord);
                DialogResult aResult = aForm.ShowDialog();
             }
+            */
+            return showCount;
         }
 
 
@@ -995,7 +1008,7 @@ namespace FiltraAnbidAnvaldia
             return showCount;
         }
 
-        public void FiltraFundoFechamento(int fundNumber, int firstRecord, int lastRecord)
+        public int FiltraFundoFechamento(int fundNumber, int firstRecord, int lastRecord)
         {
             int iCount;
             int theIndex;
@@ -1023,12 +1036,15 @@ namespace FiltraAnbidAnvaldia
                 // Let's check some numbers...
                 showCount = TestaCota(dLastCota, iCount, showCount);
             }
+            /*
             if (showCount > 0)
             {
                 AnvldiaForm aForm = new AnvldiaForm();
                 aForm.InitializeGrid(this, firstRecord, lastRecord);
                 DialogResult aResult = aForm.ShowDialog();
             }
+            */
+            return showCount;
         }
 
         public int SignalFund(double dLastCota, int iCount, int showCount)
