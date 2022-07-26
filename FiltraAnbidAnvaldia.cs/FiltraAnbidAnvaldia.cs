@@ -14,7 +14,7 @@ namespace FiltraAnbidAnvaldia
         // public static string dataFolder;
 
 
-        static public DateTime theRefDate;
+        static public DateTime theRefDate = DateTime.Today;
         static public DateTime theGerDate;
         static public DateTime theToday = DateTime.Today;
         public static LogForm theLogForm;
@@ -88,9 +88,9 @@ namespace FiltraAnbidAnvaldia
 
             theGerDate = oCalendario.NextWorkingDay(theToday);
 
-            dataZero = afile.LoadFile(@"C:\SIAnbid42\Anbid\Importar\anvldia.txt");
+            dataZero = afile.LoadFile(@"C:\SIAnbima43\Anbima\Importar\anvldia.txt");
 
-            afile.LoadExceptionsFile(@"C:\SIAnbid42\anvldiaExceptions.txt");
+            afile.LoadExceptionsFile(@"C:\SIAnbima43\anvldiaExceptions.txt");
 
             Console.WriteLine($"Record Count: {afile.FileRecords.Count.ToString()}");
 
@@ -100,26 +100,26 @@ namespace FiltraAnbidAnvaldia
             //    MessageBox.Show($"Somethin weird here: {AAAGlobals.FixFundoAberturaFirstRecordNaoBateu}");
             //}
 
-            afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(0).txt", AllLines: true, RemovedLines: true, AddedLines: false);
+            afile.DumpFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(0).txt", AllLines: true, RemovedLines: true, AddedLines: false);
 
             afile.FirstFilter();
-            afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(r1).txt", AllLines: false, RemovedLines: true, AddedLines: false);
+            afile.DumpFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(r1).txt", AllLines: false, RemovedLines: true, AddedLines: false);
 
             afile.FileCleanUp();
 
             afile.SecondFilter();
 
-            afile.DumpLogFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(1).log");
+            afile.DumpLogFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(1).log");
 
-            afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(1).txt", AllLines: false, RemovedLines: false, AddedLines: false);
+            afile.DumpFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(1).txt", AllLines: false, RemovedLines: false, AddedLines: false);
 
-            afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(r).txt", AllLines: false, RemovedLines: true, AddedLines: false);
+            afile.DumpFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(r).txt", AllLines: false, RemovedLines: true, AddedLines: false);
 
-            afile.DumpFile(@"C:\SIAnbid42\Anbid\Importar\anvldia(a).txt", AllLines: false, RemovedLines: false, AddedLines: true);
+            afile.DumpFile(@"C:\SIAnbima43\Anbima\Importar\anvldia(a).txt", AllLines: false, RemovedLines: false, AddedLines: true);
 
             //if (DialogResult.OK == MessageBox.Show($"Rewrite/Dump Exceptions File?", "MESSAGE", MessageBoxButtons.OKCancel))
             //{
-            //    afile.DumpExceptionsFile(@"C:\SIAnbid42\anvldiaExceptions.txt");
+            //    afile.DumpExceptionsFile(@"C:\SIAnbima43\anvldiaExceptions.txt");
             //}
 
             DBFunctions.CloseDBConn();

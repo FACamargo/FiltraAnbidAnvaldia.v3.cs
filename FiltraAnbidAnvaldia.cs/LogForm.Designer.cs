@@ -104,7 +104,9 @@
             this.Controls.Add(this.CBDoIt);
             this.Controls.Add(this.DateTimePicker1);
             this.Controls.Add(this.Label1);
+            this.Location = new System.Drawing.Point(50, 50);
             this.Name = "LogForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "FiltraAnbidAnvaldia";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
             this.Load += new System.EventHandler(this.LogForm_Load);

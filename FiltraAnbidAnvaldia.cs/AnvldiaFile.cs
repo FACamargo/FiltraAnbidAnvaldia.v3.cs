@@ -58,7 +58,7 @@ namespace FiltraAnbidAnvaldia
 
         public DateTime aSearchDate;
 
-        public DateTime MaxData = new DateTime(1900, 1, 1, 0, 0, 0);
+        public DateTime MaxData = new DateTime(1901, 1, 1, 0, 0, 0);
         public DateTime MinData = new DateTime(2200, 12, 31, 23, 59, 59);
 
         //private int lastMatch = 0; // last exception matched with a record
@@ -418,6 +418,10 @@ namespace FiltraAnbidAnvaldia
                 MessageBox.Show($"Error: File {aFullFileName} could not be found.", "Error", MessageBoxButtons.OK);
                 return new DateTime(0, 0, 0); ;
             }
+
+            AAAGlobals.DataZero = dataZero;
+            AAAGlobals.DataUMA = dataUMA;
+
             return dataZero;
         }
 
@@ -436,7 +440,7 @@ namespace FiltraAnbidAnvaldia
                        ((!(FileRecords[j].ptrPreviousRecord is null)) && (RemovedLines == FileRecords[j].ptrPreviousRecord.bRemoveLine)))
                     {
                         if (AddedLines && !(FileRecords[j].ptrPreviousRecord is null)) sw.WriteLine("Added Previous Record");
-                        PrintRecordLine(sw, FileRecords[j]);
+                        PrintRecordLine(sw, FileRecords[j], AllLines, RemovedLines);
                     }
                     j = j + 1;
                 }
@@ -465,49 +469,53 @@ namespace FiltraAnbidAnvaldia
             }
         }
 
-        public void PrintRecordLine(StreamWriter sw, AnvldiaRecord aRecord)
+        public void PrintRecordLine(StreamWriter sw, AnvldiaRecord aRecord, bool AllLines, bool RemovedLines)
         {
-            if (!(aRecord.ptrPreviousRecord is null)) PrintRecordLine(sw, aRecord.ptrPreviousRecord);
+            if (!(aRecord.ptrPreviousRecord is null)) PrintRecordLine(sw, aRecord.ptrPreviousRecord, AllLines, RemovedLines);
 
-            StringBuilder sb = new StringBuilder(aRecord.CodFundo);
-            sb.Append(tab);
+            //if (aRecord.CodFundo.Equals("001996")) MessageBox.Show("Here");
 
-            sb.Append(aRecord.Data.ToString(@"dd\/MM\/yyyy HH:mm:ss"));
-            sb.Append(tab);
+            if ((AllLines) || aRecord.bRemoveLine == RemovedLines)
+            {
+                StringBuilder sb = new StringBuilder(aRecord.CodFundo);
+                sb.Append(tab);
 
-            if (!aRecord.bNullPL)
-            {
-                if (aRecord.PL != 0) sb.Append(aRecord.PL.ToString("F2", sBr));
-                else sb.Append("0");
-            }
-            sb.Append(tab);
+                sb.Append(aRecord.Data.ToString(@"dd\/MM\/yyyy HH:mm:ss"));
+                sb.Append(tab);
 
-            if (!aRecord.bNullValCota)
-            {
-                if (aRecord.ValCota != 0) sb.Append(aRecord.SValCota);  // line = line & aRecord.ValCota.ToString("F9", sBr)
-                else sb.Append("0");
-            }
-            sb.Append(tab);
-            if (!aRecord.bNullRentDia)
-            {
-                if (aRecord.RentDia != 0) sb.Append(aRecord.RentDia.ToString("F7", sBr));
-                else sb.Append("0");
-            }
-            sb.Append(tab);
-            if (!aRecord.bNullRentMes)
-            {
-                if (aRecord.RentMes != 0) sb.Append(aRecord.RentMes.ToString("F7", sBr));
-                else sb.Append("0");
-            }
-            sb.Append(tab);
-            if (!aRecord.bNullRentAno)
-            {
-                if (aRecord.RentAno != 0) sb.Append(aRecord.RentAno.ToString("F7", sBr));
-                else sb.Append("0");
-            }
-            sw.WriteLine(sb.ToString());
+                if (!aRecord.bNullPL)
+                {
+                    if (aRecord.PL != 0) sb.Append(aRecord.PL.ToString("F2", sBr));
+                    else sb.Append("0");
+                }
+                sb.Append(tab);
 
-            if (!(aRecord.ptrNextRecord  is null)) PrintRecordLine(sw, aRecord.ptrNextRecord);
+                if (!aRecord.bNullValCota)
+                {
+                    if (aRecord.ValCota != 0) sb.Append(aRecord.SValCota);  // line = line & aRecord.ValCota.ToString("F9", sBr)
+                    else sb.Append("0");
+                }
+                sb.Append(tab);
+                if (!aRecord.bNullRentDia)
+                {
+                    if (aRecord.RentDia != 0) sb.Append(aRecord.RentDia.ToString("F7", sBr));
+                    else sb.Append("0");
+                }
+                sb.Append(tab);
+                if (!aRecord.bNullRentMes)
+                {
+                    if (aRecord.RentMes != 0) sb.Append(aRecord.RentMes.ToString("F7", sBr));
+                    else sb.Append("0");
+                }
+                sb.Append(tab);
+                if (!aRecord.bNullRentAno)
+                {
+                    if (aRecord.RentAno != 0) sb.Append(aRecord.RentAno.ToString("F7", sBr));
+                    else sb.Append("0");
+                }
+                sw.WriteLine(sb.ToString());
+            }
+            if (!(aRecord.ptrNextRecord  is null)) PrintRecordLine(sw, aRecord.ptrNextRecord, AllLines, RemovedLines);
         }
 
         public void PrintLogRecordLine(StreamWriter sw, AnvldiaRecord aRecord)
@@ -644,7 +652,8 @@ namespace FiltraAnbidAnvaldia
                     lastRecord = FileLastRecord[fundNumber];
                     showCount = 0;
 
-                    //if (FileRecords[firstRecord].CodFundo.Equals("001996"))
+                    //if (FileRecords[firstRecord].CodFundo.Equals("001996") || FileRecords[firstRecord].CodFundo.Equals("000191"))
+                    //if (FileRecords[firstRecord].CodFundo.Equals("585671") || FileRecords[firstRecord].CodFundo.Equals("592471"))
                     //{
                     //    MessageBox.Show("Here");
                     //    AnvldiaForm aForm = new AnvldiaForm();
@@ -674,51 +683,54 @@ namespace FiltraAnbidAnvaldia
                                 else
                                 {
                                     MessageBox.Show($"Error: Fundo is not Abertura nor Fechamento: Fundo({fundNumber.ToString()}): {FileRecords[firstRecord].CodFundo}.");
-                                }
-
-                                if (showCount > 0 || aCodFundo.Equals("001996"))
-                                {
-                                    AnvldiaForm aForm = new AnvldiaForm();
-                                    aForm.InitializeGrid(this, firstRecord, lastRecord);
-                                    DialogResult aResult = aForm.ShowDialog();
+                                    showCount = 1;
                                 }
                             }
                             else
                             {
                                 MessageBox.Show($"Error: DBRecord {DBRecords[0].CodFundo} does not match Fund({fundNumber.ToString()}): {FileRecords[fundNumber].CodFundo}.");
+                                showCount = 1;
                             }
-
+                            if (showCount > 0 || aCodFundo.Equals("000191") || aCodFundo.Equals("001996"))
+                            {
+                                AnvldiaForm aForm = new AnvldiaForm();
+                                aForm.InitializeGrid(this, firstRecord, lastRecord);
+                                aForm.WindowState = FormWindowState.Normal;
+                                aForm.StartPosition = FormStartPosition.Manual;
+                                aForm.Location = new System.Drawing.Point(10, 25);
+                                DialogResult aResult = aForm.ShowDialog();
+                            }
                         }
                         //else
                         //{ //Here we process the records without any DB data on the selected period
-                          // processa exceções tipo 
-                          // 219665 em 06/11/2012 (maybe fixed)
-                          // 305316 em 31/10/2012 e 31/12/2014
-                          // 621201 em 31/10/2012
-                          // 619469 em 23/07/2013
-                          // 624462 em 13/11/2014 e 24/11/2014
-                          //  299731  01 / 04 / 2015 possivelmente corrigido
-                          // 299741   04 / 05 / 2015 possivelmente corrigido
-                          // 299758   04 / 05 / 2015 possivelmente corrigido
-                          // 299766   04 / 05 / 2015 possivelmente corrigido
-                          //  344532  03 / 10 / 2016 Erro flagrante
-                          //  607347  23 / 09 / 2016 Outro segmento - erro 40131040,00 1,000000000 (tlavez trocar CNPJ)
-                          //  607347  23 / 09 / 2019 Outro segmento - (tlavez trocar CNPJ)
-                          //  264539  19 / 12 / 2017 00:00:00 0   1,510356010 - ja fechou em 2015
-                          //  613053  27 / 12 / 2019 00:00:00 0,01    100,000000000 (MALUCO)
-                          //  552178    23 / 03 / 2020 00:00:00 0   1000,000000000 possivelmente corrigido (=2015)
-                          //  552208    23 / 03 / 2020 00:00:00 0   1000,000000000 possivelmente corrigido (=2015)
-                          //  561835    02 / 10 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000
-                          //  561894    02 / 10 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000
-                          //  575771    02 / 12 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000 (podia corrigir)
-                          //  578622    28 / 09 / 2020 é de outro segmento - e totalmente errada
-                          //  579378	21/12/2020 00:00:00	2000000,00	1000,000000000  (inserted record- maybe fixed)
-                          //  630871  long story - from 25/08/2016 até 30/09/2021
-                          // 224571 22/11/2021 - re-fechei o fundo (exceção - registro zero cota)
-                          //  241334 em 2/12/2021 a 31/01/2022
-                          //  253863 em 31/12/2021 - maybe is correct!!!
-                          //  411302 what the fuck - why did it not work?
-                      //}
+                        // processa exceções tipo 
+                        // 219665 em 06/11/2012 (maybe fixed)
+                        // 305316 em 31/10/2012 e 31/12/2014
+                        // 621201 em 31/10/2012
+                        // 619469 em 23/07/2013
+                        // 624462 em 13/11/2014 e 24/11/2014
+                        //  299731  01 / 04 / 2015 possivelmente corrigido
+                        // 299741   04 / 05 / 2015 possivelmente corrigido
+                        // 299758   04 / 05 / 2015 possivelmente corrigido
+                        // 299766   04 / 05 / 2015 possivelmente corrigido
+                        //  344532  03 / 10 / 2016 Erro flagrante
+                        //  607347  23 / 09 / 2016 Outro segmento - erro 40131040,00 1,000000000 (tlavez trocar CNPJ)
+                        //  607347  23 / 09 / 2019 Outro segmento - (tlavez trocar CNPJ)
+                        //  264539  19 / 12 / 2017 00:00:00 0   1,510356010 - ja fechou em 2015
+                        //  613053  27 / 12 / 2019 00:00:00 0,01    100,000000000 (MALUCO)
+                        //  552178    23 / 03 / 2020 00:00:00 0   1000,000000000 possivelmente corrigido (=2015)
+                        //  552208    23 / 03 / 2020 00:00:00 0   1000,000000000 possivelmente corrigido (=2015)
+                        //  561835    02 / 10 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000
+                        //  561894    02 / 10 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000
+                        //  575771    02 / 12 / 2020 00:00:00  PL  1000,000000000 Exceção - a cota correta é 1 e não 1000 (podia corrigir)
+                        //  578622    28 / 09 / 2020 é de outro segmento - e totalmente errada
+                        //  579378	21/12/2020 00:00:00	2000000,00	1000,000000000  (inserted record- maybe fixed)
+                        //  630871  long story - from 25/08/2016 até 30/09/2021
+                        // 224571 22/11/2021 - re-fechei o fundo (exceção - registro zero cota)
+                        //  241334 em 2/12/2021 a 31/01/2022
+                        //  253863 em 31/12/2021 - maybe is correct!!!
+                        //  411302 what the fuck - why did it not work?
+                        //}
                     }
                     // else skip fund all together...
                     //firstRecord = lastRecord + 1;
@@ -772,32 +784,20 @@ namespace FiltraAnbidAnvaldia
             AnvldiaRecord aNewRecord = new AnvldiaRecord() { CodFundo = aRecord.CodFundo, Data = aNewData };
 
             int aDBIndex = FindFundDBRecord(aNewRecord);
-            if (aDBIndex >= 0)
-            {
-                aNewRecord.bNullRecord = false;
-                aNewRecord.bRemoveLine = false;
-                aNewRecord.bNullPL = false;
-                aNewRecord.bZeroPL = (aDataBase[aDBIndex].PL == 0.0) ? true : false;
-                aNewRecord.PL = aDataBase[aDBIndex].PL;
-                aNewRecord.bNullValCota = false;
-                aNewRecord.ValCota = aDataBase[aDBIndex].ValCota;
-                aNewRecord.SValCota = aDataBase[aDBIndex].SValCota;
-                aNewRecord.EventoTipo = aDataBase[aDBIndex].EventoTipo;
-                aNewRecord.HistPri = aDataBase[aDBIndex].HistPri;
-            }
-            else
-            {
-                aNewRecord.bNullRecord = true;
-                aNewRecord.bRemoveLine = true;
-                aNewRecord.bNullPL = true;
-                aNewRecord.bZeroPL = true;
-                aNewRecord.PL = 0;
-                aNewRecord.bNullValCota = true;
-                aNewRecord.ValCota = 0;
-                aNewRecord.SValCota = "";
-                aNewRecord.EventoTipo = aRecord.EventoTipo; // the best we can do... is this.
-                aNewRecord.HistPri = -1;
-            }
+
+            if (aDBIndex < 0) return;
+           
+            aNewRecord.bNullRecord = false;
+            aNewRecord.bRemoveLine = false;
+            aNewRecord.bNullPL = false;
+            aNewRecord.bZeroPL = (aDataBase[aDBIndex].PL == 0.0) ? true : false;
+            aNewRecord.PL = aDataBase[aDBIndex].PL;
+            aNewRecord.bNullValCota = false;
+            aNewRecord.ValCota = aDataBase[aDBIndex].ValCota;
+            aNewRecord.SValCota = aDataBase[aDBIndex].SValCota;
+            aNewRecord.EventoTipo = aDataBase[aDBIndex].EventoTipo;
+            aNewRecord.HistPri = aDataBase[aDBIndex].HistPri;
+            
             aNewRecord.bNullRentDia = true;
             aNewRecord.bNullRentMes = true;
             aNewRecord.bNullRentAno = true;
@@ -807,15 +807,13 @@ namespace FiltraAnbidAnvaldia
 
             aNewRecord.ptrPreviousRecord = null;
             aNewRecord.ptrNextRecord = null;
-            aNewRecord.ptrIndex = -1;
             aNewRecord.LogText = null;
 
             aNewRecord.bSignalRecDate = false;       // indicates record with date prior to segment start!
             aNewRecord.bFlagCotaOffBounds = false;   // indicates record with ValCota outside bounds;
             aNewRecord.nFlagCotaOBType = 0;          // indicates type of boundary violation for ValCota;
 
-            aRecord.ptrPreviousRecord = aNewRecord;
-            aRecord.ptrIndex = anIndex;
+            if (!aNewRecord.bRemoveLine) aRecord.ptrPreviousRecord = aNewRecord;
         }
 
         public int FiltraFundoAbertura(int fundNumber, int firstRecord, int lastRecord)
@@ -835,6 +833,7 @@ namespace FiltraAnbidAnvaldia
             //double dThisCota;
 
             double dLastCota = DBRecords[DBRecords.Count - 1].ValCota;
+            double dLastPL = DBRecords[DBRecords.Count - 1].PL;
 
             cntAbertura += 1;
 
@@ -843,7 +842,7 @@ namespace FiltraAnbidAnvaldia
                 if (numRecs < 2)
                 { // Just one record alone, but on the correct date
                     AddPreviousDBRecord(FileRecords[lastRecord], lastRecord, DBRecords);
-                    showCount = TestaCota(dLastCota, lastRecord, showCount);
+                    showCount = TestaCota(dLastCota, dLastPL, lastRecord, showCount, 0);
                 }
                 else //  numRecs >=2
                 {   // Tenho pelo menos 2 registros... São sequenciais?
@@ -884,8 +883,8 @@ namespace FiltraAnbidAnvaldia
                             }
                         }
                         // Let's check some numbers...
-                        showCount = TestaCota(dLastCota, lastRecord, showCount);
-                        showCount = TestaCota(dLastCota, lastRecord-1, showCount);
+                        showCount = TestaCota(dLastCota, dLastPL, lastRecord, showCount, 0);
+                        showCount = TestaCota(dLastCota, dLastPL, lastRecord -1, showCount, 0);
 
                         // From here on, First PL Record is fixed at best. And Second record is consistent with it...!
                         if (numRecs == 3)
@@ -899,26 +898,26 @@ namespace FiltraAnbidAnvaldia
                                 AddPreviousDBRecord(FileRecords[lastRecord - 1], lastRecord - 1, DBRecords);
                             }
                             // In either case, we now test third record for consistency (the fourth just added certainly is consistent... or so we hope)
-                            showCount = TestaCota(dLastCota, lastRecord - 2, showCount);
+                            showCount = TestaCota(dLastCota, dLastPL, lastRecord - 2, showCount, 0);
                         }
                         else if (numRecs > 3)
                              {  // at this point we have at least 4 records...
                                 if (!Program.oCalendario.PreviousWorkingDay(FileRecords[lastRecord - 1].Data).Equals(FileRecords[lastRecord - 2].Data))
                                 {// third record is not sequential - Add record before the second... 
                                     AddPreviousDBRecord(FileRecords[lastRecord - 1], lastRecord - 1, DBRecords); // between 2nd and 3rd
-                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 2, dLastCota, showCount); // loop through third on...
+                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 2, dLastCota, dLastPL, showCount); // loop through third on...
                                 }
                                 else
                                 { // third record is sequential with second. What about fourth and third?
                                   if (!Program.oCalendario.PreviousWorkingDay(FileRecords[lastRecord - 2].Data).Equals(FileRecords[lastRecord - 3].Data))
                                   { // nope... there is a gap between 3rd and 4th...
                                     AddPreviousDBRecord(FileRecords[lastRecord - 2], lastRecord - 2, DBRecords); // add between 3rd and 4th 
-                                    showCount = TestaCota(dLastCota, lastRecord - 2, showCount); // check 3rd consistency
-                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 3, dLastCota, showCount); // loop through fourth on...
+                                    showCount = TestaCota(dLastCota, dLastPL, lastRecord - 2, showCount, 0); // check 3rd consistency
+                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 3, dLastCota, dLastPL, showCount); // loop through fourth on...
                                   }
                                   else
                                   { // third and fourth are sequential... 
-                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 2, dLastCota, showCount); // loop through third on...
+                                    showCount = LoopThroughRecords(firstRecord, lastRecord - 2, dLastCota, dLastPL, showCount); // loop through third on...
                                   }
                                 } 
                              }
@@ -932,28 +931,20 @@ namespace FiltraAnbidAnvaldia
                     { // Não, não são sequenciais - Falta lógica aqui?!?... e fundos também. Ninguém caiu aqui!
                       // Second record on are consistent?
                         AddPreviousDBRecord(FileRecords[lastRecord], lastRecord, DBRecords); // add record just before the DataZero record
-                        showCount = TestaCota(dLastCota, lastRecord, showCount);
-                        showCount = LoopThroughRecords(firstRecord, lastRecord-1, dLastCota, showCount);
+                        showCount = TestaCota(dLastCota, dLastPL, lastRecord, showCount, 0);
+                        showCount = LoopThroughRecords(firstRecord, lastRecord-1, dLastCota, dLastPL, showCount);
                     }
                 } // First record at dataZero, processing done!
             }
             else // First record is not dataZero
             {   if (numRecs < 2) AddPreviousDBRecord(FileRecords[lastRecord], lastRecord, DBRecords); // Just one record alone, on an uncertain date
-                else showCount = LoopThroughRecords(firstRecord, lastRecord, dLastCota, showCount); // more records, no hope to fixing them...
+                else showCount = LoopThroughRecords(firstRecord, lastRecord, dLastCota, dLastPL, showCount); // more records, no hope to fixing them...
             }
-            /*
-            if (showCount > 0 || theCodFundo.Equals("001996"))
-            {
-               AnvldiaForm aForm = new AnvldiaForm();
-               aForm.InitializeGrid(this, firstRecord, lastRecord);
-               DialogResult aResult = aForm.ShowDialog();
-            }
-            */
             return showCount;
         }
 
 
-        public int LoopThroughRecords(int firstRecord, int lastRecord, double dLastCota, int showCount)
+        public int LoopThroughRecords(int firstRecord, int lastRecord, double dLastCota, double dLastPL, int showCount)
         {
             int iCount;
             int theIndex;
@@ -1001,7 +992,7 @@ namespace FiltraAnbidAnvaldia
                     }
                 }
                 // Let's check some numbers...
-                showCount = TestaCota(dLastCota, iCount, showCount);
+                showCount = TestaCota(dLastCota, dLastPL, iCount, showCount, 0);
             }
             if (!FileRecords[firstRecord].bRemoveLine && (FileRecords[firstRecord].ptrPreviousRecord is null)) // did not remove first record...
                AddPreviousDBRecord(FileRecords[firstRecord], firstRecord, DBRecords); // add record just before the first record record... if possible...
@@ -1014,7 +1005,10 @@ namespace FiltraAnbidAnvaldia
             int theIndex;
             int showCount = 0;
             int numRecs = lastRecord - firstRecord + 1;
+
             double dLastCota = DBRecords[DBRecords.Count - 1].ValCota;
+            double dLastPL = DBRecords[DBRecords.Count - 1].PL;
+
             for (iCount = lastRecord; iCount >= firstRecord; iCount--)
             {
                 theIndex = FindFundDBRecord(FileRecords[iCount]);
@@ -1034,16 +1028,8 @@ namespace FiltraAnbidAnvaldia
                         showCount = SignalFund(dLastCota, iCount, showCount);
                 }
                 // Let's check some numbers...
-                showCount = TestaCota(dLastCota, iCount, showCount);
+                showCount = TestaCota(dLastCota, dLastPL, iCount, showCount, 1);
             }
-            /*
-            if (showCount > 0)
-            {
-                AnvldiaForm aForm = new AnvldiaForm();
-                aForm.InitializeGrid(this, firstRecord, lastRecord);
-                DialogResult aResult = aForm.ShowDialog();
-            }
-            */
             return showCount;
         }
 
@@ -1056,9 +1042,10 @@ namespace FiltraAnbidAnvaldia
             return ++showCount;
         }
 
-        public int TestaCota(double dLastCota, int iCount, int showCount)
+        public int TestaCota(double dLastCota, double dLastPL, int iCount, int showCount, int isFechamento)
         {  // Checks whether ValCota is within range, or should be verified!
             double dThisCota;
+            double dThisPL;
             if (showCount > 3) return showCount;
             // Let's check some numbers...
             if (FileRecords[iCount].PL == 0.0)
@@ -1075,7 +1062,13 @@ namespace FiltraAnbidAnvaldia
                     FileRecords[iCount].LogText = "watch for ValCota out of range (1).";
 
                     FileRecords[iCount].bFlagCotaOffBounds = true;
-                    FileRecords[iCount].nFlagCotaOBType = 1; 
+                    FileRecords[iCount].nFlagCotaOBType = 1;
+                    if (dLastCota != 0)
+                    {
+                        dThisPL = dLastPL * (dThisCota / dLastCota);
+                        // if difference less than R$ 1,10 then match ok
+                        if (Math.Abs(dThisPL - FileRecords[iCount].PL) < 1.1) { FileRecords[iCount].nFlagCotaMatchPL = 1; }
+                    }
                     showCount++;
                 }
                 else if (dThisCota != 0.0)
@@ -1086,6 +1079,12 @@ namespace FiltraAnbidAnvaldia
                         FileRecords[iCount].LogText = "watch for ValCota out of range (2).";
                         FileRecords[iCount].bFlagCotaOffBounds = true;
                         FileRecords[iCount].nFlagCotaOBType = 2;
+                        if (dLastCota != 0)
+                        {
+                            dThisPL = dLastPL * (dThisCota / dLastCota);
+                            // if difference less than R$ 1,10 then match ok
+                            if (Math.Abs(dThisPL - FileRecords[iCount].PL) < 1.1) { FileRecords[iCount].nFlagCotaMatchPL = 1; }
+                        }
                         showCount++;
                     }
                 }

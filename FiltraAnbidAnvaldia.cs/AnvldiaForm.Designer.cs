@@ -34,20 +34,7 @@
             this.btnProcess = new System.Windows.Forms.Button();
             this.btnReject = new System.Windows.Forms.Button();
             this.anvldiaGridView = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.databaseGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.btnBrowser = new System.Windows.Forms.Button();
             this.SelectFlag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.LineId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CodFundo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HistoricoData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FundoPL = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +43,17 @@
             this.RentMes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RentAno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RemoveFlag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.databaseGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnBrowser = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.anvldiaGridView)).BeginInit();
@@ -86,7 +84,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ANVLDIA";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // btnAccept
             // 
@@ -125,7 +122,6 @@
             this.anvldiaGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.anvldiaGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SelectFlag,
-            this.LineId,
             this.CodFundo,
             this.HistoricoData,
             this.FundoPL,
@@ -140,6 +136,76 @@
             this.anvldiaGridView.Size = new System.Drawing.Size(743, 274);
             this.anvldiaGridView.TabIndex = 1;
             this.anvldiaGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.anvldiaGridView_CellContentClick);
+            // 
+            // SelectFlag
+            // 
+            this.SelectFlag.HeaderText = "Select";
+            this.SelectFlag.MinimumWidth = 40;
+            this.SelectFlag.Name = "SelectFlag";
+            this.SelectFlag.Width = 40;
+            // 
+            // CodFundo
+            // 
+            this.CodFundo.HeaderText = "CodFundo";
+            this.CodFundo.MinimumWidth = 10;
+            this.CodFundo.Name = "CodFundo";
+            this.CodFundo.ReadOnly = true;
+            this.CodFundo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CodFundo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CodFundo.Width = 80;
+            // 
+            // HistoricoData
+            // 
+            this.HistoricoData.HeaderText = "Data";
+            this.HistoricoData.MinimumWidth = 10;
+            this.HistoricoData.Name = "HistoricoData";
+            this.HistoricoData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.HistoricoData.Width = 80;
+            // 
+            // FundoPL
+            // 
+            this.FundoPL.HeaderText = "PL";
+            this.FundoPL.MinimumWidth = 10;
+            this.FundoPL.Name = "FundoPL";
+            this.FundoPL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ValCota
+            // 
+            this.ValCota.HeaderText = "Cota";
+            this.ValCota.MinimumWidth = 10;
+            this.ValCota.Name = "ValCota";
+            this.ValCota.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // RentDia
+            // 
+            this.RentDia.HeaderText = "RentDia";
+            this.RentDia.MinimumWidth = 10;
+            this.RentDia.Name = "RentDia";
+            this.RentDia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RentDia.Width = 70;
+            // 
+            // RentMes
+            // 
+            this.RentMes.HeaderText = "RentMes";
+            this.RentMes.MinimumWidth = 10;
+            this.RentMes.Name = "RentMes";
+            this.RentMes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RentMes.Width = 70;
+            // 
+            // RentAno
+            // 
+            this.RentAno.HeaderText = "RentAno";
+            this.RentAno.MinimumWidth = 10;
+            this.RentAno.Name = "RentAno";
+            this.RentAno.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RentAno.Width = 70;
+            // 
+            // RemoveFlag
+            // 
+            this.RemoveFlag.HeaderText = "Remove";
+            this.RemoveFlag.MinimumWidth = 50;
+            this.RemoveFlag.Name = "RemoveFlag";
+            this.RemoveFlag.Width = 50;
             // 
             // tabPage2
             // 
@@ -160,7 +226,6 @@
             this.databaseGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.databaseGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewCheckBoxColumn1,
-            this.dataGridViewTextBoxColumn0,
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
@@ -172,7 +237,6 @@
             this.databaseGridView.Name = "databaseGridView";
             this.databaseGridView.Size = new System.Drawing.Size(746, 274);
             this.databaseGridView.TabIndex = 2;
-            this.databaseGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.databaseGridView_CellContentClick);
             // 
             // dataGridViewCheckBoxColumn1
             // 
@@ -180,15 +244,6 @@
             this.dataGridViewCheckBoxColumn1.MinimumWidth = 40;
             this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             this.dataGridViewCheckBoxColumn1.Width = 40;
-            // 
-            // dataGridViewTextBoxColumn0
-            // 
-            this.dataGridViewTextBoxColumn0.HeaderText = "Id";
-            this.dataGridViewTextBoxColumn0.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn0.Name = "dataGridViewTextBoxColumn0";
-            this.dataGridViewTextBoxColumn0.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn0.Visible = false;
-            this.dataGridViewTextBoxColumn0.Width = 80;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -254,89 +309,7 @@
             this.btnBrowser.TabIndex = 2;
             this.btnBrowser.Text = "Browser";
             this.btnBrowser.UseVisualStyleBackColor = true;
-            this.btnBrowser.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // SelectFlag
-            // 
-            this.SelectFlag.HeaderText = "Select";
-            this.SelectFlag.MinimumWidth = 40;
-            this.SelectFlag.Name = "SelectFlag";
-            this.SelectFlag.Width = 40;
-            // 
-            // LineId
-            // 
-            this.LineId.HeaderText = "Id";
-            this.LineId.MinimumWidth = 10;
-            this.LineId.Name = "LineId";
-            this.LineId.ReadOnly = true;
-            this.LineId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.LineId.Width = 40;
-            // 
-            // CodFundo
-            // 
-            this.CodFundo.HeaderText = "CodFundo";
-            this.CodFundo.MinimumWidth = 10;
-            this.CodFundo.Name = "CodFundo";
-            this.CodFundo.ReadOnly = true;
-            this.CodFundo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.CodFundo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CodFundo.Width = 80;
-            // 
-            // HistoricoData
-            // 
-            this.HistoricoData.HeaderText = "Data";
-            this.HistoricoData.MinimumWidth = 10;
-            this.HistoricoData.Name = "HistoricoData";
-            this.HistoricoData.ReadOnly = true;
-            this.HistoricoData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.HistoricoData.Width = 80;
-            // 
-            // FundoPL
-            // 
-            this.FundoPL.HeaderText = "PL";
-            this.FundoPL.MinimumWidth = 10;
-            this.FundoPL.Name = "FundoPL";
-            this.FundoPL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FundoPL.Width = 80;
-            // 
-            // ValCota
-            // 
-            this.ValCota.HeaderText = "Cota";
-            this.ValCota.MinimumWidth = 10;
-            this.ValCota.Name = "ValCota";
-            this.ValCota.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ValCota.Width = 80;
-            // 
-            // RentDia
-            // 
-            this.RentDia.HeaderText = "RentDia";
-            this.RentDia.MinimumWidth = 10;
-            this.RentDia.Name = "RentDia";
-            this.RentDia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RentDia.Width = 70;
-            // 
-            // RentMes
-            // 
-            this.RentMes.HeaderText = "RentMes";
-            this.RentMes.MinimumWidth = 10;
-            this.RentMes.Name = "RentMes";
-            this.RentMes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RentMes.Width = 70;
-            // 
-            // RentAno
-            // 
-            this.RentAno.HeaderText = "RentAno";
-            this.RentAno.MinimumWidth = 10;
-            this.RentAno.Name = "RentAno";
-            this.RentAno.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RentAno.Width = 70;
-            // 
-            // RemoveFlag
-            // 
-            this.RemoveFlag.HeaderText = "Remove";
-            this.RemoveFlag.MinimumWidth = 50;
-            this.RemoveFlag.Name = "RemoveFlag";
-            this.RemoveFlag.Width = 50;
+            this.btnBrowser.Click += new System.EventHandler(this.btnBrowser_Click);
             // 
             // AnvldiaForm
             // 
@@ -345,9 +318,9 @@
             this.ClientSize = new System.Drawing.Size(828, 480);
             this.Controls.Add(this.btnBrowser);
             this.Controls.Add(this.tabControl1);
+            this.Location = new System.Drawing.Point(5, 5);
             this.Name = "AnvldiaForm";
             this.Text = "anvldiaForm";
-            this.Load += new System.EventHandler(this.AnvldiaForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.anvldiaGridView)).EndInit();
@@ -365,8 +338,10 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView databaseGridView;
         private System.Windows.Forms.Button btnBrowser;
+        private System.Windows.Forms.Button btnReject;
+        private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn0;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -374,11 +349,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
-        private System.Windows.Forms.Button btnReject;
-        private System.Windows.Forms.Button btnAccept;
-        private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectFlag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LineId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodFundo;
         private System.Windows.Forms.DataGridViewTextBoxColumn HistoricoData;
         private System.Windows.Forms.DataGridViewTextBoxColumn FundoPL;
