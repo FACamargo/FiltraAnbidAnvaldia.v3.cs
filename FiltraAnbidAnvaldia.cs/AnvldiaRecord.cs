@@ -30,6 +30,7 @@ namespace FiltraAnbidAnvaldia
         public bool bSignalRecDate;       // indicates record with date prior to segment start!
         public bool bFlagCotaOffBounds;   // indicates record with ValCota outside bounds;
         public int  nFlagCotaOBType;      // indicates type of boundary violation for ValCota;
+        public int nFlagCotaMatchPL;      // indicates that out of boundary violation for ValCota may match PL calculation;
 
         public bool bRemoveLine;
 
@@ -49,7 +50,6 @@ namespace FiltraAnbidAnvaldia
 
         public AnvldiaRecord ptrPreviousRecord;
         public AnvldiaRecord ptrNextRecord;
-        public int ptrIndex;
 
         public string LogText;
 
@@ -69,7 +69,8 @@ namespace FiltraAnbidAnvaldia
 
             bSignalRecDate = false;       // indicates record with date prior to segment start!
             bFlagCotaOffBounds = false;   // indicates record with ValCota outside bounds;
-            nFlagCotaOBType = 0;      // indicates type of boundary violation for ValCota;
+            nFlagCotaOBType = 0;          // indicates type of boundary violation for ValCota;
+            nFlagCotaMatchPL = 0;         // indicates type of boundary violation for ValCota;
 
             // CodFundo = "";
             // Data = "01/01/1901";
@@ -87,7 +88,6 @@ namespace FiltraAnbidAnvaldia
 
             ptrPreviousRecord = null;
             ptrNextRecord = null;
-            ptrIndex = -1;
 
             LogText = null;
         }

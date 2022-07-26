@@ -14,7 +14,7 @@ namespace FiltraAnbidAnvaldia
         // public static string dataFolder;
 
 
-        static public DateTime theRefDate;
+        static public DateTime theRefDate = DateTime.Today;
         static public DateTime theGerDate;
         static public DateTime theToday = DateTime.Today;
         public static LogForm theLogForm;
